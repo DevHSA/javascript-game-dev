@@ -7,8 +7,8 @@ let result = 0
 
 function randomSquare(){
 
-    square.forEach(className => {
-        className.classList.remove('mole')
+    square.forEach(classNamee => {
+        classNamee.classList.remove('mole')
     })
 
     let randomPosition = square[Math.floor( Math.random() * 9 )]
