@@ -25,10 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[currentShooterIndex].classList.add('shooter') 
 
 
+
     function moveShooter(e){
 
         squares[currentShooterIndex].classList.remove('shooter')
-        console.log(currentShooterIndex)
+        //console.log(currentShooterIndex)
+
         switch(e.keyCode){
             
             case 37: 
@@ -41,16 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         squares[currentShooterIndex].classList.add('shooter')
     }
-
-
+  
+  
     document.addEventListener('keydown', moveShooter)
-
+ 
     //Move the bad guys
     function moveInvaders(){
 
 
-        const leftEdge = alienInvaders[0  ] % width === 0
-        const rightEdge = alienInvaders[width - 1] % width === width -1 
+        const leftEdge = alienInvaders[0] % width === 0
+        const rightEdge = alienInvaders[alienInvaders.length - 1] % width === width -1 
 
         if( (leftEdge && direction === -1) || (rightEdge && direction === 1) ){
             direction = width
@@ -64,13 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         for(let i=0 ; i < alienInvaders.length ; i++){
-            alienInvaders[alienInvaders[i]] += direction
+            alienInvaders[i] += direction
         }
+
         for(let i=0; i < alienInvaders.length ; i++)
         {
-            squares[alienInvaders[i]].classList.add('invader')
+            if(!alienInvadersTakenDown.includes(i)){
+                squares[alienInvaders[i]].classList.add('invader')
+            }
         }
-     
+
         if(squares[currentShooterIndex].classList.contains('invader','shooter')){
 
             resultDisplay.textContent = 'Game Over'
@@ -78,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(invaderId)
         }
 
+        
 
         for(i = 0 ; i < alienInvaders.length ; i++) {
 
@@ -86,15 +92,62 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(InvaderId)
             }
         }
+
+        if(alienInvadersTakenDown.length === alienInvaders.length){
+
+            resultDisplay.textContent = 'You Win!'
+            clearInterval(invaderId)
+        }
+
+
+
     }
 
     invaderId = setInterval(moveInvaders, 500)
 
 
+    function shoot(e){
+
+        let laserId
+        let currentLaserIndex = currentShooterIndex
+
+        function moveLaser(){
+
+            squares[currentLaserIndex].classList.remove('laser')
+            currentLaserIndex -= width
+            squares[currentLaserIndex].classList.add('laser')
+            if(squares[currentLaserIndex].classList.contains('invader')) {
+
+                squares[currentLaserIndex].classList.remove('laser')
+                squares[currentLaserIndex].classList.remove('invader')
+                squares[currentLaserIndex].classList.add('boom')
+
+                setTimeout( () => squares[currentLaserIndex].classList.remove('boom') , 250 )
+                clearInterval(laserId)
+
+                const alienTakenDown = alienInvaders.indexOf(currentLaserIndex)
+                alienInvadersTakenDown.push(alienTakenDown)
+                result++
+                resultDisplay.textContent = result
+            }
+
+            if(currentLaserIndex < width) {
+
+                clearInterval(laserId)
+                setTimeout( () => squares[currentLaserIndex].classList.remove('laser'), 100 )
+            }
+        }
+    
+        document.addEventListener( 'keyup', e => {
+            if( e.keyCode == 32 ){
+                laserId = setInterval(moveLaser, 100)
+            }
+        })
+    
+    }
 
 
-
-
+    document.addEventListener('keyup', shoot)
 
 
 })
