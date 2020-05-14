@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveInvaders(){
 
 
-        const leftEdge = alienInvaders[0] % width === 0
+        const leftEdge = alienInvaders[0  ] % width === 0
         const rightEdge = alienInvaders[width - 1] % width === width -1 
 
         if( (leftEdge && direction === -1) || (rightEdge && direction === 1) ){
