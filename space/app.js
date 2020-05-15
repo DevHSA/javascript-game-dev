@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     document.addEventListener('keydown', moveShooter)
  
+
     //Move the bad guys
     function moveInvaders(){
 
@@ -61,15 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
             else direction =-1
         }
 
-        for(let i=0; i < alienInvaders.length ; i++){
+        for(let i=0; i <= alienInvaders.length - 1 ; i++){
             squares[alienInvaders[i]].classList.remove('invader')
         }
 
-        for(let i=0 ; i < alienInvaders.length ; i++){
+        for(let i=0 ; i <= alienInvaders.length -1 ; i++){
             alienInvaders[i] += direction
         }
 
-        for(let i=0; i < alienInvaders.length ; i++)
+        for(let i=0; i <= alienInvaders.length -1 ; i++)
         {
             if(!alienInvadersTakenDown.includes(i)){
                 squares[alienInvaders[i]].classList.add('invader')
@@ -83,9 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(invaderId)
         }
 
-        
 
-        for(i = 0 ; i < alienInvaders.length ; i++) {
+
+        for(i = 0 ; i <= alienInvaders.length -1 ; i++) {
 
             if ( alienInvaders[i] > ( squares.length - (width-1))){
                 resultDisplay.textContent = 'Game Over'
@@ -99,9 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(invaderId)
         }
 
-
-
     }
+
+
 
     invaderId = setInterval(moveInvaders, 500)
 
@@ -137,12 +138,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout( () => squares[currentLaserIndex].classList.remove('laser'), 100 )
             }
         }
-    
-        document.addEventListener( 'keyup', e => {
-            if( e.keyCode == 32 ){
-                laserId = setInterval(moveLaser, 100)
-            }
-        })
+
+        // document.addEventListener( 'keydown', e => {
+        //     if( e.keyCode === 32 ){
+        //         laserId = setInterval(moveLaser, 100)
+        //     }
+        // })
+
+        switch(e.keyCode) {
+            case 32:
+              laserId = setInterval(moveLaser, 100)
+              break
+          }
     
     }
 
