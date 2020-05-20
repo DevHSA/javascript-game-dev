@@ -106,5 +106,5 @@ document.addEventListener( 'DOMContentLoaded' , () => {
 
     // draw()
    // undraw()
-
+    interval = max++
 })  
