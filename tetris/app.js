@@ -107,4 +107,12 @@ document.addEventListener( 'DOMContentLoaded' , () => {
     // draw()
    // undraw()
     interval = max++
+
+
+
+    this is the code for please-new
+
+    further changes to the code
+
+    even further changes
 })  
