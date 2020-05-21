@@ -111,4 +111,6 @@ document.addEventListener( 'DOMContentLoaded' , () => {
 
 
     this is the code for please-new
+
+    further changes to the code
 })  
