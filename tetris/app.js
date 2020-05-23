@@ -6,7 +6,28 @@ document.addEventListener( 'DOMContentLoaded' , () => {
     const width = 10
     const height = 20
     let currentPosition = 4
-    let interval
+
+
+    //Assign Functions
+    function control(e){
+
+        if(e.keyCode ===  39){
+            moveRight()
+        }
+        else if(e.keyCode === 37){
+            moveLeft()
+        }
+        else if(e.keyCode === 38){
+            rotate()
+        }
+        else if(e.keyCode === 40){
+            moveDown()
+        }
+        
+
+    }
+
+    document.addEventListener('keyup', control)
 
     const lTetromino = [
         [1, width+1, width*2+1, 2],
@@ -62,57 +83,114 @@ document.addEventListener( 'DOMContentLoaded' , () => {
         current.forEach( index => squares[currentPosition + index].classList.remove('block'))
     }
 
-    let f1
+     
+    function moveDown() {
 
-    function moveBlock(e){
-        f1=0
-        if(e.keyCode === 39) {
-
-            for(let i=0;i<4;i++ ){
-                if(((currentPosition + current[i]) % width ) > (width -1)){
-                    f1 = 1        
-                }
-            }
-
-            if(!flag){
-                undraw()
-                currentPosition +=1
-            }
-        }
-    }
-
-    let flag
-    //MyOwnMoveDown
-    function moveDown(){
-        flag=0
         undraw()
         currentPosition += width
-        
-        for(let i=0;i<4;i++){
-            if(currentPosition + current[i] > width*height-1){
-                console.log("Hai!")
-                clearInterval(interval)
-                flag=1
-            }
-
-        }
-        if(!flag) draw()
+        draw()
+        freeze()
 
     }
 
-    interval = setInterval(moveDown, 100)
 
-    document.addEventListener('keyup', moveBlock)
+    function moveRight(){
+        undraw()
+        const isAtRightEdge = current.some( index => (currentPosition + index ) %   width === width - 1 )
+        if(!isAtRightEdge){
+            currentPosition +=1
+        }
+        if( current.some(index => squares[currentPosition + index ].classList.cotains('block2')) ){
+            currentPosition -=1
+        }
+        draw()
 
-    // draw()
-   // undraw()
-    interval = max++
+    }
+
+    function moveLeft(){
+        undraw()
+        const isAtLeftEdge = current.some( index => (currentPosition + index) % width === 0 )
+        if(!isAtLeftEdge){
+            currentPosition -=1
+        }
+        if( current.some( index => squares[currentPosition + index ].classList.contains('block2')) ){
+            currentPosition +=1
+        }
+        draw()
+    
+    }
+
+    function rotate() {
+
+        undraw()
+        currentRotation++
+        if(currentRotation === current.length){
+            currentRotation = 0
+        }
+
+        current = theTetrominoes[random][currentRotation]
+        draw()
+
+    }
+
+
+    draw()
 
 
 
-    this is the code for please-new
 
-    further changes to the code
 
-    even further changes
+
+
+
+
+
+
+
+
+
+
+
+    // let f1
+
+    // function moveBlock(e){
+    //     f1=0
+    //     if(e.keyCode === 39) {
+
+    //         for(let i=0;i<4;i++ ){
+    //             if(((currentPosition + current[i]) % width ) > (width -1)){
+    //                 f1 = 1        
+    //             }
+    //         }
+
+    //         if(!flag){
+    //             undraw()
+    //             currentPosition +=1
+    //         }
+    //     }
+    // }
+
+    // let flag
+    // //MyOwnMoveDown
+    // function moveDown(){
+    //     flag=0
+    //     undraw()
+    //     currentPosition += width
+        
+    //     for(let i=0;i<4;i++){
+    //         if(currentPosition + current[i] > width*height-1){
+    //             console.log("Hai!")
+    //             clearInterval(interval)
+    //             flag=1
+    //         }
+
+    //     }
+    //     if(!flag) draw()
+
+    // }
+
+    // interval = setInterval(moveDown, 100)
+
+    // document.addEventListener('keyup', moveBlock)
+
 })  
