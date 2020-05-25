@@ -136,16 +136,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const displayWidth = 4
     const displayIndex = 0
+    let nextRandom = 0
 
-    const smallTetriminoes = [
+    const smallTetrominoes = [
 
+        [1, displayWidth+1, displayWidth*2+1, displayWidth*2+2], //L Tet
+        [displayWidth+1, displayWidth+2, displayWidth*2+2,  displayWidth*2+3], //Z Tet
+        [1,2,3,displayWidth+2], // T Tet 
+        [1,2,displayWidth+1, displayWidth+2], // O Tet
+        [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] // I Tet
 
     ]
 
 
+    function displayShape(){
+
+        displaySquares.forEach( index => index.classList.remove('block'))
+        smallTetrominoes[nextRandom].forEach( index => displaySquares[displayIndex + index].classList.add('block'))
+    
+    }
+ 
+
+    function freeze(){
+
+        if( current.some( index => squares[currentPosition + index + width].classList.contains('block3') || 
+            squares[currentPosition + index + width].classList.contains('block2')) ) {
+
+                
+
+            }
 
 
-
+    }
 
 
 
